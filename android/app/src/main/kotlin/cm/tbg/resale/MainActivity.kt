@@ -1,4 +1,4 @@
-package com.example.flutter__appwrite
+package cm.tbg.resale
 
 import io.flutter.embedding.android.FlutterActivity
 

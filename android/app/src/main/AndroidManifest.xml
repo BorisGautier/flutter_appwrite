@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.flutter__appwrite">
+    package="cm.tbg.resale">
    <application
         android:label="flutter__appwrite"
         android:icon="@mipmap/ic_launcher">
