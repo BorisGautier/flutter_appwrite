@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cm.tbg.resale">
+    package="cm.tbg.appwrite">
    <application
-        android:label="flutter__appwrite"
+        android:label="flutter_appwrite"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
@@ -37,5 +37,13 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+             <activity android:name="com.linusu.flutter_web_auth.CallbackActivity" >
+      <intent-filter android:label="flutter_web_auth">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="appwrite-callback-6112897166747" />
+      </intent-filter>
+    </activity>
     </application>
 </manifest>
