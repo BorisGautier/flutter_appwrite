@@ -1,5 +1,7 @@
+import 'package:aesthetic_dialogs/aesthetic_dialogs.dart';
 import 'package:flutter/material.dart';
 
+// Launch Flutter app
 void main() {
   runApp(MyApp());
 }
@@ -100,6 +102,10 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            ElevatedButton(
+              onPressed: buildDialog,
+              child: Text("Open Dialog"),
+            )
           ],
         ),
       ),
@@ -109,5 +115,18 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  Future<void> buildDialog() async {
+    AestheticDialogs.showDialog(
+        title: "My Dialog",
+        message: "Hello!!!",
+        cancelable: true,
+        darkMode: false,
+        dialogAnimation: DialogAnimation.IN_OUT,
+        dialogGravity: DialogGravity.CENTER,
+        dialogStyle: DialogStyle.FLASH,
+        dialogType: DialogType.SUCCESS,
+        duration: 3000);
   }
 }
