@@ -5,6 +5,7 @@ INJECTED from D:\Users\Gautier\Documents\Flutter\Open Sources\flutter_appwrite\a
 INJECTED from D:\Users\Gautier\Documents\Flutter\Open Sources\flutter_appwrite\android\app\src\main\AndroidManifest.xml:1:1-49:12
 INJECTED from D:\Users\Gautier\Documents\Flutter\Open Sources\flutter_appwrite\android\app\src\main\AndroidManifest.xml:1:1-49:12
 MERGED from D:\Users\Gautier\Documents\Flutter\Open Sources\flutter_appwrite\android\app\src\main\AndroidManifest.xml:1:1-49:12
+MERGED from [:shared_preferences] D:\Users\Gautier\Documents\Flutter\Open Sources\flutter_appwrite\build\shared_preferences\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:flutter_web_auth] D:\Users\Gautier\Documents\Flutter\Open Sources\flutter_appwrite\build\flutter_web_auth\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:package_info_plus] D:\Users\Gautier\Documents\Flutter\Open Sources\flutter_appwrite\build\package_info_plus\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:device_info_plus] D:\Users\Gautier\Documents\Flutter\Open Sources\flutter_appwrite\build\device_info_plus\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
@@ -142,6 +143,8 @@ uses-sdk
 INJECTED from D:\Users\Gautier\Documents\Flutter\Open Sources\flutter_appwrite\android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\Users\Gautier\Documents\Flutter\Open Sources\flutter_appwrite\android\app\src\main\AndroidManifest.xml
 INJECTED from D:\Users\Gautier\Documents\Flutter\Open Sources\flutter_appwrite\android\app\src\main\AndroidManifest.xml
+MERGED from [:shared_preferences] D:\Users\Gautier\Documents\Flutter\Open Sources\flutter_appwrite\build\shared_preferences\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences] D:\Users\Gautier\Documents\Flutter\Open Sources\flutter_appwrite\build\shared_preferences\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:flutter_web_auth] D:\Users\Gautier\Documents\Flutter\Open Sources\flutter_appwrite\build\flutter_web_auth\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:flutter_web_auth] D:\Users\Gautier\Documents\Flutter\Open Sources\flutter_appwrite\build\flutter_web_auth\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:package_info_plus] D:\Users\Gautier\Documents\Flutter\Open Sources\flutter_appwrite\build\package_info_plus\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
