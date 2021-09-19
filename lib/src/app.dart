@@ -1,12 +1,15 @@
 import 'package:aesthetic_dialogs/aesthetic_dialogs.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_appwrite/src/bloc/auth/auth_bloc.dart';
+import 'package:flutter_appwrite/src/di/di.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: AppLocalizations.of(context)!.appname,
+      title: "Flutter AppWrite",
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -14,7 +17,33 @@ class MyApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       locale: Locale('fr'),
       debugShowCheckedModeBanner: false,
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          if (state is AuthInitial) {
+            return MyHomePage(title: "HomePage");
+          }
+          if (state is AuthFirstOpen) {
+            return MyHomePage(title: "First Open");
+          }
+          if (state is AuthFailure) {
+            return BlocProvider<AuthBloc>(
+              create: (context) => getIt<AuthBloc>(),
+              child: MyHomePage(title: "Auth Failure"),
+            );
+
+            // return AuthScreen();
+          }
+          if (state is AuthSuccess) {
+            /* return BlocProvider(
+              create: (context) => getIt<TabBloc>(),
+              child: HomePage(),
+            );*/
+            return MyHomePage(title: "Auth Success");
+          }
+
+          return MyHomePage(title: "Return Splash");
+        },
+      ),
     );
   }
 }
