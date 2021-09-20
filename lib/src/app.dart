@@ -32,15 +32,12 @@ class MyApp extends StatelessWidget {
               create: (context) => getIt<AuthBloc>(),
               child: LoginScreen(),
             );
-
-            // return AuthScreen();
           }
           if (state is AuthSuccess) {
-            /* return BlocProvider(
-              create: (context) => getIt<TabBloc>(),
-              child: HomePage(),
-            );*/
-            return MyHomePage(title: "Auth Success");
+            return BlocProvider<AuthBloc>(
+              create: (context) => getIt<AuthBloc>(),
+              child: MyHomePage(title: "Auth Success"),
+            );
           }
 
           return SplashScreen();

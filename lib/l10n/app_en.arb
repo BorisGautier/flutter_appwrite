@@ -12,5 +12,13 @@
     "forgotPass" : "Forgot your password?",
     "connexion" : "Connection",
     "noAccount" : "No Account yet?  ",
-    "password" : "Password"
+    "password" : "Password",
+    "registering" : "Account creation...",
+    "registerFailed": "Account creation failed",
+    "createAccount" : "Create an account",
+    "username" : "User name",
+    "passError" : "Different passwords",
+    "cpassword" : "Confirm Password",
+    "createAccount" : "Create an account",
+    "alreadyAccount" : "I already have an account"
 }

@@ -12,5 +12,13 @@
     "forgotPass" : "Mot de Passe oublié ?",
     "connexion" : "Connexion",
     "noAccount" : "Pas encore de Compte?  ",
-    "password" : "Mot de Passe"
+    "password" : "Mot de Passe",
+    "registering" : "Création du compte...",
+    "registerFailed" : "Echec de création de compte",
+    "createAccount" : "Creer un compte",
+    "username" : "Nom d'utilisateur",
+    "passError" : "Mots de passes differents",
+    "cpassword" : "Confirmer le Mot de Passe",
+    "createAccount" : "Creer un compte",
+    "alreadyAccount" : "J'ai déja un compte"
 }

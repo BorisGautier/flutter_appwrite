@@ -59,7 +59,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       yield AuthFirstOpen();
     } else {
       final userResult = await authRepository!.getuser();
-      print(userResult);
       yield AuthSuccess(userResult.success!.name!, userResult.success!.email!);
     }
   }
