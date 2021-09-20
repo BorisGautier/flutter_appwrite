@@ -71,9 +71,9 @@ class RegisterState {
     bool? isCPasswordValid,
   }) {
     return copyWith(
-      isEmailValid: isEmailValid!,
-      isPasswordValid: isPasswordValid!,
-      isCPasswordValid: isCPasswordValid!,
+      isEmailValid: isEmailValid,
+      isPasswordValid: isPasswordValid,
+      isCPasswordValid: isCPasswordValid,
       isSubmitting: false,
       isSuccess: false,
       isFailure: false,

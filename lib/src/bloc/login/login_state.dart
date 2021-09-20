@@ -100,8 +100,8 @@ class LoginState {
     bool? isPasswordValid,
   }) {
     return copyWith(
-      isEmailValid: isEmailValid!,
-      isPasswordValid: isPasswordValid!,
+      isEmailValid: isEmailValid,
+      isPasswordValid: isPasswordValid,
       isSubmitting: false,
       isSuccess: false,
       isFailure: false,

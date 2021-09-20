@@ -19,7 +19,7 @@ class User {
       this.prefs});
 
   User.fromJson(Map<String, dynamic> json) {
-    id = json['$id'];
+    id = json['\$id'];
     name = json['name'];
     registration = json['registration'];
     status = json['status'];
@@ -31,7 +31,7 @@ class User {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$id'] = this.id;
+    data['\$id'] = this.id;
     data['name'] = this.name;
     data['registration'] = this.registration;
     data['status'] = this.status;

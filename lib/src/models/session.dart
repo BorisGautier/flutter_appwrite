@@ -47,7 +47,7 @@ class Session {
       this.current});
 
   Session.fromJson(Map<String, dynamic> json) {
-    id = json['$id'];
+    id = json['\$id'];
     userId = json['userId'];
     expire = json['expire'];
     provider = json['provider'];
@@ -73,7 +73,7 @@ class Session {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['$id'] = this.id;
+    data['\$id'] = this.id;
     data['userId'] = this.userId;
     data['expire'] = this.expire;
     data['provider'] = this.provider;

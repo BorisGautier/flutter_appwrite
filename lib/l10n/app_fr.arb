@@ -1,3 +1,16 @@
 {
-    "appname" : "Flutter AppWrite"
+    "appname" : "Flutter AppWrite",
+    "loginFailed" : "Echec de Connexion",
+    "loggin" : "Connexion...",
+    "emailSend" : "Un mail de reinitialisation vous a été envoyé",
+    "emailNoSend" : "Erreur de mail. Reesayez!!!",
+    "loginSuccess" : "Connexion reussie",
+    "welcome" : "Bienvenue",
+    "invalidMail" : "Email Invalide",
+    "hintEmail" : "votremail@xyz.com",
+    "invalidPass" : "Mot de Passe Invalide",
+    "forgotPass" : "Mot de Passe oublié ?",
+    "connexion" : "Connexion",
+    "noAccount" : "Pas encore de Compte?  ",
+    "password" : "Mot de Passe"
 }

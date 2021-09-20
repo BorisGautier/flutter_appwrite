@@ -1,3 +1,16 @@
 {
-    "appname" : "Flutter AppWrite"
+    "appname" : "Flutter AppWrite",
+    "loginFailed" : "Login Failed",
+    "loggin" : "Connection...",
+    "emailSend" : "A reset email has been sent to you",
+    "emailNoSend" : "Email error. Try again!!!",
+    "loginSuccess" : "Login successful",
+    "welcome" : "Welcome",
+    "invalidMail" : "Invalid Email",
+    "hintEmail" : "votremail@xyz.com",
+    "invalidPass" : "Invalid Password",
+    "forgotPass" : "Forgot your password?",
+    "connexion" : "Connection",
+    "noAccount" : "No Account yet?  ",
+    "password" : "Password"
 }

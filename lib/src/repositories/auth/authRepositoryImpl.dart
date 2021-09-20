@@ -1,20 +1,17 @@
-import 'package:appwrite/appwrite.dart';
 import 'package:flutter_appwrite/sharedPreference.dart';
+import 'package:flutter_appwrite/src/api/appwrite.dart';
 import 'package:flutter_appwrite/src/models/user.dart';
 import 'package:flutter_appwrite/src/models/session.dart';
 import 'package:flutter_appwrite/src/repositories/auth/authRepository.dart';
 import 'package:flutter_appwrite/src/utils/networkUtils.dart';
 import 'package:flutter_appwrite/src/utils/result.dart';
-import 'package:flutter_appwrite/src/utils/strings.dart';
 
-///Implémentation des methodes de l'authentification
 class AuthRepositoryImpl implements AuthRepository {
   final NetworkInfo? networkInfo;
-  final Account? account;
   final SharedPreferencesHelper? sharedPreferencesHelper;
+  var model;
 
-  AuthRepositoryImpl(
-      {this.networkInfo, this.account, this.sharedPreferencesHelper});
+  AuthRepositoryImpl({this.networkInfo, this.sharedPreferencesHelper});
 
   @override
   Future<bool> deleteToken() async {
@@ -27,23 +24,17 @@ class AuthRepositoryImpl implements AuthRepository {
     bool isConnected = await networkInfo!.isConnected();
     if (isConnected) {
       try {
-        final Future result = account!.get();
+        final response = await initAppWrite().get();
 
-        result.then((response) {
-          var model = User.fromJson(response.body);
+        var model = User.fromJson(response.data);
 
-          return Result(success: model);
-        }).catchError((error) {
-          print(error.response);
-        });
+        return Result(success: model);
       } catch (e) {
         return Result(error: ServerError());
       }
     } else {
       return Result(error: NoInternetError());
     }
-
-    throw UnimplementedError();
   }
 
   @override
@@ -65,22 +56,18 @@ class AuthRepositoryImpl implements AuthRepository {
     bool isConnected = await networkInfo!.isConnected();
     if (isConnected) {
       try {
-        final result = account!.createSession(email: email, password: password);
+        final response = await initAppWrite()
+            .createSession(email: email, password: password);
 
-        result.then((response) {
-          var model = Session.fromJson(response.data);
+        var model = Session.fromJson(response.data);
 
-          return Result(success: model);
-        }).catchError((error) {
-          print(error.response);
-        });
+        return Result(success: model);
       } catch (e) {
         return Result(error: ServerError());
       }
     } else {
       return Result(error: NoInternetError());
     }
-    throw UnimplementedError();
   }
 
   @override
@@ -88,20 +75,17 @@ class AuthRepositoryImpl implements AuthRepository {
     bool isConnected = await networkInfo!.isConnected();
     if (isConnected) {
       try {
-        final result = account!.deleteSession(sessionId: sessionId!);
+        await initAppWrite().deleteSession(sessionId: sessionId!);
 
-        result.then((response) {
-          return Result(success: true);
-        }).catchError((error) {
-          print(error.response);
-        });
+        //  var model = Session.fromJson(response.data);
+
+        return Result(success: true);
       } catch (e) {
         return Result(error: ServerError());
       }
     } else {
       return Result(error: NoInternetError());
     }
-    throw UnimplementedError();
   }
 
   @override
@@ -110,23 +94,18 @@ class AuthRepositoryImpl implements AuthRepository {
     bool isConnected = await networkInfo!.isConnected();
     if (isConnected) {
       try {
-        final result =
-            account!.create(email: email, password: password, name: name);
+        final response = await initAppWrite()
+            .create(email: email, password: password, name: name);
 
-        result.then((response) {
-          var model = User.fromJson(response.data);
-          account!.createVerification(url: appWriteUrl);
-          return Result(success: model);
-        }).catchError((error) {
-          print(error.response);
-        });
+        var model = User.fromJson(response.data);
+
+        return Result(success: model);
       } catch (e) {
         return Result(error: ServerError());
       }
     } else {
       return Result(error: NoInternetError());
     }
-    throw UnimplementedError();
   }
 
   @override
@@ -140,21 +119,16 @@ class AuthRepositoryImpl implements AuthRepository {
     bool isConnected = await networkInfo!.isConnected();
     if (isConnected) {
       try {
-        final result = account!.updateName(name: name);
+        final response = await initAppWrite().updateName(name: name);
 
-        result.then((response) {
-          var model = User.fromJson(response.data);
+        var model = User.fromJson(response.data);
 
-          return Result(success: model);
-        }).catchError((error) {
-          print(error.response);
-        });
+        return Result(success: model);
       } catch (e) {
         return Result(error: ServerError());
       }
     } else {
       return Result(error: NoInternetError());
     }
-    throw UnimplementedError();
   }
 }

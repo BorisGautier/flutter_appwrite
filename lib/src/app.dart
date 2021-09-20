@@ -2,17 +2,19 @@ import 'package:aesthetic_dialogs/aesthetic_dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite/src/bloc/auth/auth_bloc.dart';
 import 'package:flutter_appwrite/src/di/di.dart';
+import 'package:flutter_appwrite/src/splash.dart';
+import 'package:flutter_appwrite/src/views/lading/lading.dart';
+import 'package:flutter_appwrite/src/views/login/loginScreen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_theme_x/themes/app_theme.dart';
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Flutter AppWrite",
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: FTxAppTheme.getThemeFromThemeMode(),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: Locale('fr'),
@@ -20,15 +22,15 @@ class MyApp extends StatelessWidget {
       home: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           if (state is AuthInitial) {
-            return MyHomePage(title: "HomePage");
+            return SplashScreen();
           }
           if (state is AuthFirstOpen) {
-            return MyHomePage(title: "First Open");
+            return LadingPage();
           }
           if (state is AuthFailure) {
             return BlocProvider<AuthBloc>(
               create: (context) => getIt<AuthBloc>(),
-              child: MyHomePage(title: "Auth Failure"),
+              child: LoginScreen(),
             );
 
             // return AuthScreen();
@@ -41,7 +43,7 @@ class MyApp extends StatelessWidget {
             return MyHomePage(title: "Auth Success");
           }
 
-          return MyHomePage(title: "Return Splash");
+          return SplashScreen();
         },
       ),
     );
