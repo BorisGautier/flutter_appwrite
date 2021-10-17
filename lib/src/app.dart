@@ -1,6 +1,8 @@
 import 'package:aesthetic_dialogs/aesthetic_dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite/src/bloc/auth/auth_bloc.dart';
+import 'package:flutter_appwrite/src/bloc/home/home_bloc.dart';
+import 'package:flutter_appwrite/src/bloc/login/login_bloc.dart';
 import 'package:flutter_appwrite/src/di/di.dart';
 import 'package:flutter_appwrite/src/splash.dart';
 import 'package:flutter_appwrite/src/views/lading/lading.dart';
@@ -28,14 +30,14 @@ class MyApp extends StatelessWidget {
             return LadingPage();
           }
           if (state is AuthFailure) {
-            return BlocProvider<AuthBloc>(
-              create: (context) => getIt<AuthBloc>(),
+            return BlocProvider<LoginBloc>(
+              create: (context) => getIt<LoginBloc>(),
               child: LoginScreen(),
             );
           }
           if (state is AuthSuccess) {
-            return BlocProvider<AuthBloc>(
-              create: (context) => getIt<AuthBloc>(),
+            return BlocProvider<HomeBloc>(
+              create: (context) => getIt<HomeBloc>(),
               child: MyHomePage(title: "Auth Success"),
             );
           }
@@ -85,7 +87,16 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: buildDialog,
                 child: Text("Open Dialog"),
-              )
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    context.read<AuthBloc>().add(AuthLoggedOut());
+                    /*  BlocProvider.of<AuthBloc>(context).add(
+                      AuthLoggedOut(),
+                    );
+                    Navigator.of(context).pop();*/
+                  },
+                  child: Text("Logout"))
             ],
           ),
         ),

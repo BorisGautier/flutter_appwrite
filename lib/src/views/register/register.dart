@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_appwrite/src/bloc/register/register_bloc.dart';
-import 'package:flutter_appwrite/src/di/di.dart';
-import 'package:flutter_appwrite/src/repositories/auth/authRepository.dart';
 import 'package:flutter_appwrite/src/utils/SizeConfig.dart';
 import 'package:flutter_appwrite/src/utils/colors.dart';
 import 'package:flutter_appwrite/src/utils/themes/AppTheme.dart';
 import 'package:flutter_appwrite/src/utils/themes/AppThemeNotifier.dart';
-import 'package:flutter_appwrite/src/views/login/loginScreen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_theme_x/icons/two_tone/two_tone_icon.dart';
 import 'package:flutter_theme_x/icons/two_tone/two_tone_mdi_icons.dart';
@@ -710,21 +707,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   margin: EdgeInsets.only(top: MySize.size16!),
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) {
-                                            return BlocProvider(
-                                              create: (context) =>
-                                                  getIt<RegisterBloc>(),
-                                              child: LoginScreen(
-                                                authRepository:
-                                                    getIt<AuthRepository>(),
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      );
+                                      Navigator.of(context).pop();
                                     },
                                     child: Text(
                                       AppLocalizations.of(context)!

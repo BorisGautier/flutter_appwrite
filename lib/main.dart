@@ -25,7 +25,7 @@ void main() async {
       create: (context) => AppThemeNotifier(),
       child: ChangeNotifierProvider<AppThemeNotifier>(
         create: (context) => AppThemeNotifier(),
-        child: BlocProvider(
+        child: BlocProvider<AuthBloc>(
             create: (_) => di.getIt<AuthBloc>()..add(AuthStarted()),
             child: MyApp()),
       ),

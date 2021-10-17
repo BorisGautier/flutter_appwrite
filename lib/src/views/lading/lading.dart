@@ -141,9 +141,10 @@ class _LadingPageState extends State<LadingPage> {
                       child: InkWell(
                         splashColor: themeData.colorScheme.secondary,
                         onTap: () {
-                          BlocProvider.of<AuthBloc>(context).add(
+                          /* BlocProvider.of<AuthBloc>(context).add(
                             AuthFirst(),
-                          );
+                          );*/
+                          context.read<AuthBloc>().add(AuthFirst());
                         },
                         child: Container(
                           padding: EdgeInsets.all(8),

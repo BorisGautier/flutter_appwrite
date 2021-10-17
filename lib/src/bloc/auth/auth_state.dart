@@ -32,35 +32,7 @@ class AuthFirstOpen extends AuthState {}
 class AuthFailure extends AuthState {}
 
 //Authetification Login
-class AuthLoginState extends AuthState {
-  final AuthRepository? authRepository;
-
-  const AuthLoginState({
-    @required this.authRepository,
-  });
-
-  @override
-  List<Object> get props => [authRepository!];
-
-  @override
-  String toString() {
-    return 'AuthLoginState { userRepository: $authRepository }';
-  }
-}
+class AuthLoginState extends AuthState {}
 
 //Authentification Register
-class AuthRegisterState extends AuthState {
-  final AuthRepository? authRepository;
-
-  const AuthRegisterState({
-    @required this.authRepository,
-  });
-
-  @override
-  List<Object> get props => [authRepository!];
-
-  @override
-  String toString() {
-    return 'AuthRegister { userRepository: $authRepository }';
-  }
-}
+class AuthRegisterState extends AuthState {}

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -20,86 +18,56 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc({
     this.authRepository,
     this.sharedPreferencesHelper,
-  }) : super(LoginState.initial());
-
-// RxDart pour gerer les evenements de facon asynchrone
-  @override
-  Stream<Transition<LoginEvent, LoginState>> transformEvents(
-    Stream<LoginEvent> events,
-    TransitionFunction<LoginEvent, LoginState> transitionFn,
-  ) {
-    final nonDebounceStream = events.where((event) {
-      return (event is! LoginEmailChanged && event is! LoginPasswordChanged);
-    });
-    final debounceStream = events.where((event) {
-      return (event is LoginEmailChanged || event is LoginPasswordChanged);
-    }).debounceTime(Duration(milliseconds: 300));
-    return super.transformEvents(
-      nonDebounceStream.mergeWith([debounceStream]),
-      transitionFn,
-    );
+  }) : super(LoginState.initial()) {
+    on<LoginEmailChanged>(_loginEmailChanged,
+        transformer: debounce(const Duration(milliseconds: 300)));
+    on<LoginPasswordChanged>(_loginPasswordChanged,
+        transformer: debounce(const Duration(milliseconds: 300)));
+    on<LoginWithCredentialsPressed>(_loginButtonPressed);
   }
 
-  @override
-  Stream<LoginState> mapEventToState(
-    LoginEvent event,
-  ) async* {
-    if (event is LoginEmailChanged) {
-      yield* _mapLoginEmailChangedToState(event.email!);
-    } else if (event is LoginPasswordChanged) {
-      yield* _mapLoginPasswordChangedToState(event.password!);
-    } else if (event is PasswordReset) {
-      yield* _mapPasswordResetPressedToState(email: event.email!);
-    } else if (event is LoginWithCredentialsPressed) {
-      yield* _mapLoginWithCredentialsPressedToState(
-        email: event.email!,
-        password: event.password!,
-      );
-    }
+// RxDart pour gerer les evenements de facon asynchrone
+  EventTransformer<LoginEvent> debounce<LoginEvent>(Duration duration) {
+    return (events, mapper) => events.debounceTime(duration).flatMap(mapper);
   }
 
 // Action de validation d'email qui s'effectue a chaque saisie de l'utilisateur
-  Stream<LoginState> _mapLoginEmailChangedToState(String email) async* {
-    yield state.update(
-      isEmailValid: Validators.isValidEmail(email),
-    );
+  void _loginEmailChanged(
+    LoginEmailChanged event,
+    Emitter<LoginState> emit,
+  ) async {
+    return emit(state.update(
+      isEmailValid: Validators.isValidEmail(event.email!),
+    ));
   }
 
 // Action de validation de mot de passe qui s'effectue a chaque saisie de l'utilisateur
-  Stream<LoginState> _mapLoginPasswordChangedToState(String password) async* {
-    yield state.update(
-      isPasswordValid: Validators.isValidPassword(password),
-    );
+  void _loginPasswordChanged(
+    LoginPasswordChanged event,
+    Emitter<LoginState> emit,
+  ) async {
+    return emit(state.update(
+      isPasswordValid: Validators.isValidPassword(event.password!),
+    ));
   }
 
 // Methode qui s'execute lors du clic sur le boutton connexion
-  Stream<LoginState> _mapLoginWithCredentialsPressedToState({
-    String? email,
-    String? password,
-  }) async* {
-    yield LoginState.loading();
+  void _loginButtonPressed(
+    LoginWithCredentialsPressed event,
+    Emitter<LoginState> emit,
+  ) async {
+    emit(LoginState.loading());
     try {
-      Result<Session> user = await authRepository!.login(email!, password!);
+      Result<Session> user =
+          await authRepository!.login(event.email!, event.password!);
       if (user.success!.current!) {
         await sharedPreferencesHelper!.setToken(user.success!.id!);
-        yield LoginState.success();
+        return emit(LoginState.success());
       } else {
-        yield LoginState.failure();
+        return emit(LoginState.failSend());
       }
     } catch (_) {
-      yield LoginState.failure();
+      return emit(LoginState.failSend());
     }
-  }
-
-//Reinitialisation du mot de passe
-  Stream<LoginState> _mapPasswordResetPressedToState({
-    String? email,
-  }) async* {
-    /*  try {
-      await authRepository!.forgotpassword(email);
-      yield LoginState.send();
-    } catch (_) {
-      yield LoginState.failSend();
-    }*/
   }
 }

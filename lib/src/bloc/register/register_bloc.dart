@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -20,79 +18,70 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   RegisterBloc({
     this.authRepository,
     this.sharedPreferencesHelper,
-  }) : super(RegisterState.initial());
-
-  @override
-  Stream<Transition<RegisterEvent, RegisterState>> transformEvents(
-    Stream<RegisterEvent> events,
-    TransitionFunction<RegisterEvent, RegisterState> transitionFn,
-  ) {
-    final nonDebounceStream = events.where((event) {
-      return (event is! RegisterEmailChanged &&
-          event is! RegisterPasswordChanged);
-    });
-    final debounceStream = events.where((event) {
-      return (event is RegisterEmailChanged ||
-          event is RegisterPasswordChanged);
-    }).debounceTime(Duration(milliseconds: 300));
-    return super.transformEvents(
-      nonDebounceStream.mergeWith([debounceStream]),
-      transitionFn,
-    );
+  }) : super(RegisterState.initial()) {
+    on<RegisterEmailChanged>(_registerEmailChanged,
+        transformer: debounce(const Duration(milliseconds: 300)));
+    on<RegisterPasswordChanged>(_registerPasswordChanged,
+        transformer: debounce(const Duration(milliseconds: 300)));
+    on<RegisterCPasswordChanged>(_registerConfirmPasswordChanged,
+        transformer: debounce(const Duration(milliseconds: 300)));
+    on<RegisterSubmitted>(_registerButtonPressed);
   }
 
-  @override
-  Stream<RegisterState> mapEventToState(
-    RegisterEvent event,
-  ) async* {
-    if (event is RegisterEmailChanged) {
-      yield* _mapRegisterEmailChangedToState(event.email!);
-    } else if (event is RegisterPasswordChanged) {
-      yield* _mapRegisterPasswordChangedToState(event.password!);
-    } else if (event is RegisterCPasswordChanged) {
-      yield* _mapRegisterCPasswordChangedToState(
-          event.password!, event.cpassword!);
-    } else if (event is RegisterSubmitted) {
-      yield* _mapRegisterSubmittedToState(
-          event.email!, event.password!, event.name!);
-    }
+// RxDart pour gerer les evenements de facon asynchrone
+  EventTransformer<RegisterEvent> debounce<RegisterEvent>(Duration duration) {
+    return (events, mapper) => events.debounceTime(duration).flatMap(mapper);
   }
 
-  Stream<RegisterState> _mapRegisterEmailChangedToState(String email) async* {
-    yield state.update(
-      isEmailValid: Validators.isValidEmail(email),
-    );
+// Action de validation d'email qui s'effectue a chaque saisie de l'utilisateur
+  void _registerEmailChanged(
+    RegisterEmailChanged event,
+    Emitter<RegisterState> emit,
+  ) async {
+    return emit(state.update(
+      isEmailValid: Validators.isValidEmail(event.email!),
+    ));
   }
 
-  Stream<RegisterState> _mapRegisterPasswordChangedToState(
-      String password) async* {
-    yield state.update(
-      isPasswordValid: Validators.isValidPassword(password),
-    );
+// Action de validation de mot de passe qui s'effectue a chaque saisie de l'utilisateur
+  void _registerPasswordChanged(
+    RegisterPasswordChanged event,
+    Emitter<RegisterState> emit,
+  ) async {
+    return emit(state.update(
+      isPasswordValid: Validators.isValidPassword(event.password!),
+    ));
   }
 
-  Stream<RegisterState> _mapRegisterCPasswordChangedToState(
-      String password, String cPassword) async* {
-    yield state.update(
-      isCPasswordValid: Validators.isValidCPassword(password, cPassword),
-    );
+// Action de confirmation de mot de passe qui s'effectue a chaque saisie de l'utilisateur
+  void _registerConfirmPasswordChanged(
+    RegisterCPasswordChanged event,
+    Emitter<RegisterState> emit,
+  ) async {
+    return emit(state.update(
+      isPasswordValid:
+          Validators.isValidCPassword(event.password!, event.cpassword!),
+    ));
   }
 
-  Stream<RegisterState> _mapRegisterSubmittedToState(
-      String email, String password, String name) async* {
-    yield RegisterState.loading();
+  // Methode qui s'execute lors du clic sur le boutton connexion
+  void _registerButtonPressed(
+    RegisterSubmitted event,
+    Emitter<RegisterState> emit,
+  ) async {
+    emit(RegisterState.loading());
     try {
-      Result<User> user =
-          await authRepository!.resgister(email, password, name);
+      Result<User> user = await authRepository!
+          .resgister(event.email!, event.password!, event.name!);
       print(user.success);
       if (user.success != null) {
-        yield RegisterState.success();
+        return emit(RegisterState.success());
       } else {
-        yield RegisterState.failure();
+        return emit(RegisterState.failure());
       }
     } catch (error) {
       print(error);
-      yield RegisterState.failure();
+      return emit(RegisterState.failure());
     }
   }
 }

@@ -7,35 +7,35 @@ class SharedPreferencesHelper {
   Future<bool> setIsFirstOpen(String first) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     bool res = await prefs.setString(_isFirstOpen, first);
-    print('First Open' + res.toString());
+    print('First Open ' + res.toString());
     return res;
   }
 
   Future<String> getIsFirstOpen() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String res = prefs.getString(_isFirstOpen) ?? 'oui';
-    print('First Open' + res.toString());
+    print('First Open ' + res.toString());
     return res;
   }
 
   Future<bool> setToken(String token) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     bool res = await prefs.setString(_token, token);
-    print('Token' + res.toString());
+    print('Token ' + res.toString());
     return res;
   }
 
   Future<bool> deleteToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     bool res = await prefs.remove(_token);
-    print('Token' + res.toString());
+    print('Token ' + res.toString());
     return res;
   }
 
   Future<String?> getToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? res = prefs.getString(_token) ?? null;
-    print('Token' + res.toString());
+    print('Token ' + res.toString());
     return res;
   }
 }

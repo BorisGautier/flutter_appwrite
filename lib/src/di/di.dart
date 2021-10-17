@@ -1,5 +1,6 @@
 import 'package:flutter_appwrite/sharedPreference.dart';
 import 'package:flutter_appwrite/src/bloc/auth/auth_bloc.dart';
+import 'package:flutter_appwrite/src/bloc/home/home_bloc.dart';
 import 'package:flutter_appwrite/src/bloc/login/login_bloc.dart';
 import 'package:flutter_appwrite/src/bloc/register/register_bloc.dart';
 import 'package:flutter_appwrite/src/repositories/auth/authRepository.dart';
@@ -36,4 +37,5 @@ Future<void> init() async {
         authRepository: getIt(),
         sharedPreferencesHelper: getIt(),
       ));
+  getIt.registerFactory<HomeBloc>(() => HomeBloc());
 }

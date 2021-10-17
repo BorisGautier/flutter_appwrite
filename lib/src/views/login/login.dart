@@ -5,7 +5,6 @@ import 'package:flutter_appwrite/src/bloc/auth/auth_bloc.dart';
 import 'package:flutter_appwrite/src/bloc/login/login_bloc.dart';
 import 'package:flutter_appwrite/src/bloc/register/register_bloc.dart';
 import 'package:flutter_appwrite/src/di/di.dart';
-import 'package:flutter_appwrite/src/repositories/auth/authRepository.dart';
 import 'package:flutter_appwrite/src/utils/SizeConfig.dart';
 import 'package:flutter_appwrite/src/utils/colors.dart';
 import 'package:flutter_appwrite/src/utils/themes/AppTheme.dart';
@@ -119,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             );
         }
-        if (state.isSend!) {
+        /* if (state.isSend!) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
@@ -151,7 +150,7 @@ class _LoginPageState extends State<LoginPage> {
                 backgroundColor: red,
               ),
             );
-        }
+        }*/
         if (state.isSuccess!) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
@@ -168,7 +167,8 @@ class _LoginPageState extends State<LoginPage> {
                 duration: Duration(seconds: 7),
               ),
             );
-          BlocProvider.of<AuthBloc>(context).add(AuthLoggedIn());
+          context.read<AuthBloc>().add(AuthLoggedIn());
+          //  BlocProvider.of<AuthBloc>(context).add(AuthLoggedIn());
           //  Navigator.of(context).pop();
         }
       },
@@ -544,10 +544,7 @@ class _LoginPageState extends State<LoginPage> {
                                             return BlocProvider(
                                               create: (context) =>
                                                   getIt<RegisterBloc>(),
-                                              child: RegisterScreen(
-                                                authRepository:
-                                                    getIt<AuthRepository>(),
-                                              ),
+                                              child: RegisterScreen(),
                                             );
                                           },
                                         ),
